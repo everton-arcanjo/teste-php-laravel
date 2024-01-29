@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasTable('categories')){
-            Schema::create('categories', function (Blueprint $table) {
+        if (!Schema::hasTable('failed_jobs')) {
+            Schema::create('failed_jobs', function (Blueprint $table) {
                 $table->id();
-                $table->string('name', 20);
+                $table->string('uuid');
+                $table->text('connection');
+                $table->text('queue');
+                $table->text('payload');
+                $table->text('exception');
+                $table->dateTime('failed_at')->default(now());
                 $table->timestamps();
             });
         }
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('failed_jobs');
     }
 };
